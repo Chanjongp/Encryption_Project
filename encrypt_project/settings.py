@@ -45,17 +45,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     
     # Third Party Apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    
     "rest_framework",
     "rest_framework.authtoken",
     'dj_rest_auth',
+    'dj_rest_auth.registration',
     
     # Installed Apps
     'core',
     'accounts',
-
 ]
+
+SITE_ID = 1
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -151,6 +159,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # djangorestframework
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -167,6 +184,8 @@ UNAUTHENTICATED_USER = 'django.contrib.auth.models.AnonymousUser',
 UNAUTHENTICATED_TOKEN = None
 
 AUTH_USER_MODEL = "accounts.User"
+AUTHENTICATION_METHOD = "email"
+# USER_MODEL_USERNAME_FIELD = "email"
 
 REST_USE_JWT = True
 
